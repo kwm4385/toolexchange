@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
+
+    <title>{% block title %}ToolExchange{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/base.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    {% block css %}
+    <link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">
+    {% endblock %}
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    {% block js %}
+    {% endblock %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{{ STATIC_URL }}js/html5shiv.js"></script>
+      <script src="{{ STATIC_URL }}js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="{{ STATIC_URL }}ico/favicon.ico/" height="18", width="18"> ToolExchange</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            {% block nav %}
+            <li><a href="/dashboard/">Dashboard</a></li>
+            <li><a href="/inventory/">My Tools</a></li>
+            <li><a href="/shedindex/">Sheds</a></li>
+            {% endblock %}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          	  <form class="navbar-form navbar-left" action="/search/" method="GET">
+                    <input type="text" class="form-control col-lg-8" placeholder="Search Tools" name="query" maxlength="20">
+              </form>
+		      <li class="dropdown">
+		        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome {{ user.username }} <b class="caret"></b>
+		        {% if new_requests  > 0 %}
+		        	&nbsp;&nbsp;<span class="badge" style="background-color:#b94a48;">{{ new_requests }}</span>
+		        {% endif %}
+		        </a>
+		        <ul class="dropdown-menu">
+		          <li><a href="/requestindex/">Requests{% if new_requests  > 0 %}&nbsp;&nbsp;<span class="badge" style="background-color:#b94a48;">{{ new_requests }}</span>{% endif %}</a></li>
+		          <li><a href="/communitystats/">Statistics</a></li>
+		          <li><a href="/logout/">Logout</a></li>
+		        </ul>
+		      </li>
+		    </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+    <div class="container">
+    	<br/><br/>
+		{% if messages %}
+			<br/>
+		    {% for message in messages %}
+				<div class="alert alert-{{ message.tags }} alert-dismissable">
+				    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				    <p>{{ message }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+      {% block content %}{% endblock %}
+	<br/><br/><br/><br/>
+    </div><!-- /.container -->
+    <div class = "navbar-fixed-bottom" style="background-color:#DEDEDE; border-color:#DEDEDE;">        
+       <ul class="nav nav-justified">
+	    <li><p class = "navbar-text pull-left"><h5>Created by The A Team&nbsp;&nbsp;<small>Database queries: {{ num_queries }}</small></h5></p></li>
+	
+	  </ul> 
+    </div>
+  </body>
+</html>

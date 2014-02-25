@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block css %}<link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">{% endblock %}
+{% block title %}ToolExchange - Community Statisitcs for {{ sharezone }} {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h3>
+				Community Statistics for {{ sharezone }}
+			</h3>
+		</div>
+	</div>
+	<br/>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<div class="well">
+				<p>
+					<strong>Active Transactions:</strong> {{ active_transactions }}
+				</p>
+				<p>
+					<strong>Total Tools:</strong> {{ total_tools }}
+				</p>
+				<p>
+					<strong>Available Tools:</strong> {{ available_tools }}<br />
+				</p>
+				
+			</div>
+		</div>	
+		<div class="col-md-6 column">
+			<div class="well">
+				<p>
+					<strong>Total Sheds:</strong> {{ total_sheds }}
+				</p>
+				<p>
+					<strong>Total Users:</strong> {{total_users }}
+				</p>
+				<p>
+					<strong>Total Sharezones:</strong> {{ total_sharezones }}
+				</p>			
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

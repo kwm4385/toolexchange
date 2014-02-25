@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}ToolExchange - My Tools{% endblock %}
+
+{% block nav %}
+     <li><a href="/dashboard/">Dashboard</a></li>
+     <li class="active"><a href="/inventory/">My Tools</a></li>
+     <li><a href="/shedindex/">Sheds</a></li>
+{% endblock %}
+
+{% block content %}
+  <h1>My Tools</h1>
+  <div class="row">
+  	  <div class = "col-lg-10"><p>This page lists all the tools that you have registered. To to view details, edit, or add to a shed, click any tool.</p></div>
+  	  <div class = "col-lg-1">
+          <a href="/addtool/"><button type="button" class="btn btn-info">Register New Tool</button></a>
+      </div>
+  </div>
+{% if users_tools %}
+<table class="table table-hover">
+	<thead>
+	  <tr>
+		<th>Tool Name</th>
+		<th>Description</th>
+		<th>Category</th>
+	  </tr>
+	</thead>
+	{% for tool in users_tools %}
+		  <tr style="cursor: pointer;" onclick="document.location = '/toolView/{{ tool.id }}/';">
+	      <td>{{ tool.name }}</td>
+	      <td>{{tool.description}}</td>
+	      <td>{{tool.category}}</td>
+	      </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <strong>No tools are available.</strong>
+{% endif %}
+{% endblock %}
+

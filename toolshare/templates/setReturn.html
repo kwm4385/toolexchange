@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block css %}<link href="{{ STATIC_URL }}css/formstyle.css" rel="stylesheet">{% endblock %}
+{% block title %}ToolExchange - Tool Return Request{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-8">
+		<div class="well">
+			<form class="form-inline" action="/setReturn/{{ tool.id }}/" method="post">{% csrf_token %}
+				<h2>Return Request for '<a href="/toolView/{{tool.id}}/">{{ tool.name }}</a>'</h2>
+				{% for field in form %}
+				<div class="form-group">
+			            {{ field.label_tag }} {{ field }}
+			            {{ field.errors }}
+			    </div>
+			    {% endfor %}
+			    <br/><br/>
+			    <a href="/toolView/{{tool.id}}/"><button type="button" class="btn btn-lg btn-default">Cancel</button></a>
+			    <div class="form-group"> 	
+					<input type="submit" value="Submit" class="btn btn-lg btn-primary"/>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+

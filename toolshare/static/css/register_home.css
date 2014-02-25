@@ -1,0 +1,85 @@
+body {
+	background-color:#F5EDDF;
+}
+
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 25px;
+	text-align: left;
+	font-family: sans-serif;
+    padding: 20px 0;
+    padding-left: 10px
+}
+
+p {
+    padding: 10px;
+}
+
+#wrapper {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+#headerwrap {
+    width: 1000px;
+    float: left;
+    margin: 0 auto;
+}
+
+#header {
+    height: 75px;
+    background: #ADF296;
+    border-radius: 10px;
+    margin: 5px;
+    vertical-align:middle;
+}
+
+#contentwrap {
+    width: 1000;
+    float: left;
+    margin: 0 auto;
+}
+
+#content {
+    background: #F5EDDF;
+    border-radius: 10px;
+    border: 1px solid #e1d9cb;
+    margin: 5px;
+}
+
+#about {
+	float: left;
+	border-radius: 5px;
+	width: 59%;
+	background: #FFFFFF	
+}
+
+#regform {
+	float: right;
+	border-radius: 5px;
+	width: 39%;
+	background: #FFFFFF	
+}
+
+label {
+    float: left;
+    width: 50%;
+    text-align: right;
+    margin-right: 0.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.form-field-no-caption {
+    margin-left: 10%;
+    padding-left: 10px;
+}
+    
+.container input {
+    width: 50%;
+    clear: both;
+}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}ToolExchange - View Request{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-lg-2"></div>
+		<div class="col-lg-8">
+			<div class="well">
+				{% if lender_view %}
+					{% if req.rtype == "B" %}
+						<h3>{{ borrower.username }} is requesting to borrow your '<a href="/toolView/{{ tool.id }}">{{ tool.name }}</a>'</h3>
+					{% else %}
+						<h3>{{ borrower.username }} is requesting to return your '<a href="/toolView/{{ tool.id }}">{{ tool.name }}</a>'</h3>
+					{% endif %}
+					<br/>
+					<h4>Message: </h4>
+					<div style="background-color:#ffffff; border-radius:5px; padding:5px;"><p>{{ req.message }}</p></div>
+					{% if req.rstatus == "P" %}
+						<h4>Status: </h3><p>Pending</p>
+					{% elif req.rstatus == "A" %}
+						<h4>Status: </h3><p style="color:green;">Accepted</p>
+					{% elif req.rstatus == "D" %}
+						<h4>Status: </h3><p style="color:red;">Declined</p>
+					{% endif %}
+					<br/>
+					<a href="/requestindex/"><button type="button" class="btn btn-primary">< Back</button></a>
+					{% if req.rstatus == "P" %}
+					<div style="float:right">
+						{% if req.rtype == "B" %}
+							<a href="/acceptrequest/{{ req.id }}"><button type="button" class="btn btn-success">Accept</button></a>
+							<a href="/declinerequest/{{ req.id }}"><button type="button" class="btn btn-danger">Decline</button></a>
+						{% else %}
+							<a href="/acceptrequest/{{ req.id }}"><button type="button" class="btn btn-success">Confirm</button></a>
+						{% endif %}
+					</div>
+					<br/><br/>
+					{% endif %}
+				{% else %}
+					{% if req.rtype == "B" %}
+						<h3>You've requested to borrow '<a href="/toolView/{{ tool.id }}">{{ tool.name }}</a>' from {{ lender.username }}</h3>
+					{% else %}
+						<h3>You've requested to return '<a href="/toolView/{{ tool.id }}">{{ tool.name }}</a>' to {{ lender.username }}</h3>
+					{% endif %}
+					<br/>
+					<h4>Message: </h4>
+					<div style="background-color:#ffffff; border-radius:5px; padding:5px;"><p>{{ req.message }}</p></div>
+					{% if req.rstatus == "P" %}
+						<h4>Status: </h3><p>Pending</p>
+					{% elif req.rstatus == "A" %}
+						<h4>Status: </h3><p style="color:green;">Accepted</p>
+					{% elif req.rstatus == "D" %}
+						<h4>Status: </h3><p style="color:red;">Declined</p>
+					{% endif %}
+
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	
+
+{% endblock %}

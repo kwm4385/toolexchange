@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+{% block css %}<link href="{{ STATIC_URL }}css/formstyle.css" rel="stylesheet">{% endblock %}
+{% block js %}
+<script src="{{ STATIC_URL }}js/toolview.js"></script>
+{% endblock %}
+{% block title %}ToolExchange - {{ shed.name }}{% endblock %}
+
+{% block content %}
+<br/>
+<h2>{{ shed.name }}</h2>
+<div class="row">
+	<div class="col-lg-10">
+		<h4>Location:</h4> {{ shed.location }}
+	</div>
+	<div class="col-lg-2">
+		{% if user.id == shed.manager %}
+		<a href="/deleteshed/{{ shed.id }}" onclick="return confirmDelete()">
+			<br/>
+		    <button type="button" class="btn btn-danger">Delete Shed</button>
+		</a>
+		{% endif %}
+	</div>
+</div>	
+<br/>
+{% if tools %}
+	<table class="table table-hover">
+		<thead>
+		  <tr>
+			<th>Tool Name</th>
+			<th>Description</th>
+			<th>Category</th>
+			<th>Status</th>
+		  </tr>
+		</thead>
+		{% for tool in tools %}
+			  <tr style="cursor: pointer;" onclick="document.location = '/toolView/{{ tool.id }}/';">
+		      <td>{{tool.name}}</td>
+		      <td>{{tool.description}}</td>
+		      <td>{{tool.category}}</td>
+		      {% if tool.borrower > 0 %}
+		      	  <td>Checked out <i class="icon-ban-circle"></i></td>
+		      {% else %}
+		          <td>Available <i class="icon-ok"></i></td>
+		      {% endif %}
+		      </tr>
+	    {% endfor %}
+	</table>
+{% else %}
+    <strong>This shed has no tools.</strong>
+{% endif %}
+
+{% endblock %}

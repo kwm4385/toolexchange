@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+{% block css %}<link href="{{ STATIC_URL }}css/formstyle.css" rel="stylesheet">{% endblock %}
+{% block title %}ToolExchange - Create Shed{% endblock %}
+
+{% block content %}
+	<form class="form-signin" action="/makeshed/" method="post">{% csrf_token %}
+		<h2>Create Shed</h2>
+		{% for field in form %}
+		<div class="form-group">
+			{% if field.label_tag == "Home Share" %}
+			<div class="checkbox">            
+	            {{ field }} {{ field.label_tag }}
+	            {{ field.errors }}
+	        </div>
+			{% else %}
+			<div class="fieldWrapper">            
+	            {{ field.label_tag }} {{ field }}
+	            {{ field.errors }}
+	        </div>
+			{% endif %}
+	    </div>
+	    {% endfor %}
+	    <br/>
+		<input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block"/>
+	</form>
+{% endblock %}

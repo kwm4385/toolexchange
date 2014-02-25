@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}ToolExchange - Sheds{% endblock %}
+{% block nav %}
+     <li><a href="/dashboard/">Dashboard</a></li>
+     <li><a href="/inventory/">My Tools</a></li>
+     <li class="active"><a href="/shedindex/">Sheds</a></li>
+{% endblock %}
+{% block content %}
+    <h1>Sheds</h1>
+    <div class="row">
+	  	<div class = "col-lg-10"><p>Here are all of the sheds in your share zone. Click to view their contents.</p></div>
+	  	<div class = "col-lg-1">
+	        <a href="/makeshed/"><button type="button" class="btn btn-info">Create New Shed</button></a>
+	    </div>
+    </div>
+  	{% if sharezone_sheds %}
+	<table class="table table-hover">
+		<thead>
+		  <tr>
+			<th>Shed Name</th>
+			<th>Type</th>
+			<th>Manager</th>
+		  </tr>
+		</thead>
+		{% for shed in sharezone_sheds %}
+			  <tr style="cursor: pointer;" onclick="document.location = '/shedView/{{ shed.id }}/';">
+		      <td>{{shed.name}}</td>
+		      {% if shed.homeShare %}
+		      <td>Home Share</td>
+		      {% else %}
+		      <td>Community Shed</td>
+		      {% endif %}
+		      <td>{{shed.managerName}}</td>
+		      </tr>
+	    {% endfor %}
+	</table>
+	{% else %}
+	    <strong>No sheds are available.</strong>
+	{% endif %}
+{% endblock %}

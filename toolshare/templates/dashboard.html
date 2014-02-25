@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block css %}<link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">{% endblock %}
+{% block title %}ToolExchange - Dashboard{% endblock %}
+{% block nav %}
+     <li class="active"><a href="/dashboard/">Dashboard</a></li>
+     <li><a href="/inventory/">My Tools</a></li>
+     <li><a href="/shedindex/">Sheds</a></li>
+{% endblock %}
+{% load toolshare_extras %}
+{% block content %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h2>Tools Overview</h2>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-6 column">
+			<h4>Borrowed Tools</h4>
+			{% if borrowed_tools %}
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Tool Name</th>
+							<th>Owner</th>
+							<th>Due Date</th>
+							<th>Time Remaining</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for tool in borrowed_tools %}
+							{% query Request borrowerId=user.id as req %}	
+							{% query Usercorn pk=tool.owner as owner %}	
+							<tr style="cursor: pointer;" onclick="document.location = '/toolView/{{ tool.id }}/';">
+								<td>{{ tool.name }}</td>
+								<td>{% for o in owner %}{{ o.username }}{% endfor %}</td>
+								{% for r in req %}
+								<td>{{ r.dueDate }}</td>
+								<td>{{ r.dueDate|timeuntil }}</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<strong>You are not borrowing any tools.</strong>
+			{% endif %}
+		</div>
+		<div class="col-md-6 column">
+			<h4>Loaned Tools</h4>
+			{% if loaned_tools %}
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Tool Name</th>
+							<th>Borrower</th>
+							<th>Due Date</th>
+							<th>Time Remaining</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for tool in loaned_tools %}
+							{% query Request ownerId=user.id as req %}	
+							
+							<tr style="cursor: pointer;" onclick="document.location = '/toolView/{{ tool.id }}/';">
+								<td>{{ tool.name }}</td>
+								{% for r in req %}
+								{% query Usercorn pk=r.borrowerId as borrower %}	
+								<td>{% for b in borrower %}{{ b.username }}{% endfor %}</td>
+								<td>{{ r.dueDate }}</td>
+								<td>{{ r.dueDate|timeuntil }}</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<strong>You are not loaning any tools.</strong>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

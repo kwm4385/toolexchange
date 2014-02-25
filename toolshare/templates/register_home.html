@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
+
+    <title>ToolExchange</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ STATIC_URL }}css/reghome.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{{ STATIC_URL }}js/html5shiv.js"></script>
+      <script src="{{ STATIC_URL }}js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+	      <div class="row">
+	      	<div class="col-lg-3"><a href="/" class="title"><h2 class="text-muted">ToolExchange</h2></a></div>
+	        <div style="float:right;"><a href="/login/"><button type="button" class="btn btn-info">Log In</button></a></div>
+	      </div>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Welcome to ToolExchange</h1>
+        <p class="lead">The best way to find and share tools in your community. Fast, free, and convenient.</p>
+      </div>
+
+      <div class="row marketing">
+      	<div class="col-lg-6">
+          <h4>Organize</h4>
+          <p>Keep track of all the tools you own in one place. Your information is private until you choose to share.</p>
+
+          <h4>Find</h4>
+          <p>Looking for just the right tool for the job? Browse all the tools people in your community are sharing and
+          arrange to borrow exactly what you need.</p>
+
+          <h4>Share</h4>
+          <p>Want to be a good neighbor? Loan out your tools from your home or community shed!</p>
+        </div>
+      
+        <div class="col-lg-6">
+        <div class="well">
+          <h3>Register Now</h4>
+          <p class="error">{{ form.non_field_errors }}</p>
+          <form action="" method="post">{% csrf_token %}
+			 {% for field in regform %}
+			   <div class="form-group {%if field.errors %}has-error{%endif%}">
+	            <p>{{ field.label_tag }} {{ field }}</p>
+	            </div>
+	            <p class="error">{{ field.errors }}</p>
+		     {% endfor %}
+			 <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+	 	  </form>
+          <h4>Already registered? <a href="/login/">Log in</a></h4>
+          </div>
+        </div>
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

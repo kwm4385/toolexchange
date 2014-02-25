@@ -1,0 +1,123 @@
+
+{% extends "base.html" %}
+
+{% block js %}
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="{{ STATIC_URL }}js/toolview.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{% endblock %}
+
+{% block title %}ToolExchange - {{ tool.name }}{% endblock %}
+
+{% block content %}
+	 <br/>
+     <h1>{{ tool.name }}</h1>
+     <div class="row">
+	    <div class="col-lg-5">
+	     	<img src="{{ tool.image.url }}" height=430, width=475 data-toggle="modal" data-target="#imageModal" style="cursor: pointer;"/>
+	    </div>
+		<div class="col-lg-6">
+			<p><h4>Description:</h4></p>
+	      	<p>{{tool.description}}</p>
+	      	<p><h4>Category:</h4></p>
+	      	<p>{{tool.category}}</p>
+	      	<p><h4>Condition:</h4></p>
+	      	<p>{{tool.get_condition_display}}</p>
+	      	<p><h4>Owner:</h4></p>
+	      	<p>{{toolowner.username}}</p>
+	      	<p><h4>Date Registered:</h4></p>
+	      	<p>{{tool.registered}}</p>
+	      	<p><h4>In shed:</h4></p>
+	      	{% if toolshed != "None" %}
+	      	<a href="/shedView/{{ tool.shed }}"><p>{{toolshed}}</p></a>
+	      	{% else %}
+	      	<p>{{toolshed}}</p>
+	      	{% endif %}
+	      	<p><h4>Status:</h4></p>
+	      	{% if tool.borrower > 0 %}
+	      	  <p>Checked out</p>
+	        {% else %}
+	          <p>Available</p>
+	        {% endif %}
+	    </div>
+     </div>
+     <br/>
+	<div class="row">
+	    <div class="col-lg-8"></div>
+		{% if user.username == toolowner.username %}
+		 <div class="col-lg-1">
+		   <a href="/removetool/{{ tool.id }}", onclick="return confirmDelete()">
+		     <button type="button" class="btn btn-danger">Delete</button>
+		   </a>
+		 </div>
+		 <div class="col-lg-1">
+		    <a href="/tooledit/{{ tool.id }}"><button type="button" class="btn btn-default">Edit</button></a>
+		    </div>
+		    <div class="col-lg-1">
+		      <button data-toggle="modal" data-target="#shedModal" type="button" class="btn btn-primary">Change shed</button>
+		    </div>
+		{% elif pending_request %}
+		   <div class="col-lg-1">
+			  <button type="button" class="btn btn-warning disabled">Request Pending</button>
+		    </div>
+		{% elif not tool.borrower > 0 %}
+			<div class="col-lg-1">
+			  <a href="/makerequest/{{ tool.id }}"><button type="button" class="btn btn-info">Borrow Request</button></a>
+		    </div>
+		{% elif tool.borrower == user.id %}
+			<div class="col-lg-1">
+		      <a href="/setReturn/{{ tool.id }}"><button type="button" class="btn btn-info">Return</button></a>
+		    </div>
+		{% endif %}
+	</div>
+
+<!-- Shed Modal -->
+<div class="modal fade" id="shedModal" tabindex="-1" role="dialog" aria-labelledby="shedModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Change Shed</h4>
+      </div>
+      <form class="form-signin" action="/movetool/" method="GET">
+      <div class="modal-body">  
+	  	<div class="form-group"> 
+	  	<label for="shed" class="control-label">Shed</label>
+		  <select id="shed" name="shed" class="form-control">
+			  {% for id, name in shed_options.items %}\
+			  	<option value="{{ id }}">{{ name }}</option>
+			  {% endfor %}
+		  </select>
+		  <input type="hidden" name="tool" value="{{ tool.id }}"/>
+		  </div>  
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <input type="submit" class="btn btn-default btn-primary"/>
+	    </div>
+      </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">{{ tool.name }}</h4>
+      </div>
+      <div class="modal-body">
+        <img src="{{ tool.image.url }}" style="max-width:90%; max-height:90%;"/>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% endblock %}

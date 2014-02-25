@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+
+{% block title %}ToolExchange - My Requests{% endblock %}
+
+{% block content %}
+<h1>My Requests</h1>
+<div class="well">
+	<h3>Pending Requests</h3>
+	<ul>
+	{% if request_list %}
+	    <ul>
+	    {% for request in request_list %}
+	        {% if request.rstatus == "P" %}
+	        	<li><a href="/requestview/{{ request.id }}/">{{request.get_rtype_display}} request - {{request.message}}</a></li>
+	        {% endif %}
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No requests currently.</p>
+	{% endif %}
+	</ul>	
+
+	<h3>Other Requests</h3>
+	<ul>
+	{% if request_list %}
+	    <ul>
+	    {% for request in request_list %}
+	        {% if request.rstatus != "P" %}
+	        	<li><a href="/requestview/{{ request.id }}/">{{request.get_rtype_display}} request - {{request.message}}</a></li>
+	        {% endif %}
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No requests currently.</p>
+	{% endif %}
+	</ul>
+</div>
+{% endblock %}

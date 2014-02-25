@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block css %}<link href="{{ STATIC_URL }}css/formstyle.css" rel="stylesheet">{% endblock %}
+{% block title %}ToolExchange - Search{{ shed.name }}{% endblock %}
+
+{% block content %}
+<br/><br/>
+<h4>Search results for "{{ search }}"</h4>
+<br/>
+{% if tools %}
+	<table class="table table-hover">
+		<thead>
+		  <tr>
+			<th>Tool Name</th>
+			<th>Description</th>
+			<th>Category</th>
+		  </tr>
+		</thead>
+		{% for tool in tools %}
+			  <tr onclick="document.location = '/toolView/{{ tool.id }}/';">
+		      <td>{{tool.name}}</td>
+		      <td>{{tool.description}}</td>
+		      <td>{{tool.category}}</td>
+		      </tr>
+	    {% endfor %}
+	</table>
+{% else %}
+    <strong>No tools found matching your search.</strong>
+{% endif %}
+
+{% endblock %}

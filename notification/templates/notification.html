@@ -1,0 +1,6 @@
+<h2>{{notification.title}{tool.getname}}</h2>
+<h1>Sent by: {{username.username}}</h1>
+<p>{{notification.message}}</p>
+{% if notification.view = False %}
+<p><a href="notification/markasread/{{notification.id}}/">Mark as Read</a></p>
+{% endif %}

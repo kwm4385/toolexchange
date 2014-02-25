@@ -1,0 +1,28 @@
+from django.conf.urls import patterns, url
+from toolshare import views
+
+urlpatterns = patterns('',
+    url(r'^movetool', views.move_tool, name='moveTool'),
+    url(r'^shedindex', views.shed_index, name='shedIndex'),
+    url(r'^addtool', views.addtool, name='addtool'),
+    url(r'^tooledit/(?P<tool_id>\d+)/$', views.edittool, name='edittool'),
+    url(r'^login',views.log_in, name='login'),
+    url(r'search',views.tools_index, name='search'),
+    url(r'^inventory',views.personal_inventory, name='inventory'),
+    url(r'^$',views.register_home, name='home'),
+    url(r'^toolView/(?P<tool_id>\d+)/$', views.view_tool, name='toolView'),
+    url(r'^removetool/(?P<tool_id>\d+)/$', views.removetool, name='removetool'),
+    url(r'^logout',views.log_out, name='logout'),
+    url(r'^dashboard',views.dashboard, name='dashboard'),
+    url(r'^makeshed',views.make_Shed, name='makeshed'),
+    url(r'^shedView/(?P<shed_id>\d+)/$',views.view_shed, name='shedView'),
+    url(r'^requestindex/',views.request_index, name='requestindex'),
+    url(r'^requestview/(?P<request_id>\d+)/$',views.view_request, name='requestview'),
+    url(r'^notificationcenter/', views.notification, name='notification'),
+    url(r'^makerequest/(?P<tool_id>\d+)', views.make_request, name='makerequest'),
+    url(r'^acceptrequest/(?P<request_id>\d+)/$',views.accept_request, name='acceptrequest'),
+    url(r'^declinerequest/(?P<request_id>\d+)/$',views.reject_request, name='declinerequest'),
+    url(r'^setReturn/(?P<tool_id>\d+)/$', views.set_return, name='setReturn'),
+    url(r'^communitystats', views.community_statistics, name='communityStats'),
+    url(r'^deleteshed/(?P<shed_id>\d+)/$',views.delete_shed, name='deleteShed'),
+)
