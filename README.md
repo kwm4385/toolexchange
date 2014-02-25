@@ -1,0 +1,1 @@
+ToolExchange is a web application designed to allow community members to share and loan tools among themselves. It was created for SWEN-261 at RIT by Kevin Moses, Yura Kim, Johnathan Sellers, Brian Lovelace, and Allan Piazzarollo.
